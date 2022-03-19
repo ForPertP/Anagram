@@ -12,8 +12,24 @@ string rtrim(const string &);
  * The function accepts STRING s as parameter.
  */
 
-int anagram(string s) {
+// From https://www.hackerrank.com/challenges/anagram/forum By abiratsis
+int anagram(string s)
+{
+    if (s.length() % 2 != 0)
+        return -1;
+    
+    std::string diff;
+    int size = s.length();
+    string lp = s.substr(0, size / 2);
+    string rp = s.substr(size / 2, size / 2);
+    
+    std::sort(lp.begin(), lp.end());
+    std::sort(rp.begin(), rp.end());
 
+    std::set_difference(lp.begin(), lp.end(), rp.begin(), rp.end(), 
+                            std::back_inserter(diff));
+    
+    return diff.length();
 }
 
 int main()
