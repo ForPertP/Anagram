@@ -32,6 +32,30 @@ int anagram(string s)
     return diff.length();
 }
 
+int anagram(string s)
+{
+    int n = s.length();
+    if (n % 2 != 0)
+        return -1;
+
+    vector<int> freq(26, 0);
+    int half = n / 2;
+
+    for (int i = 0; i < half; ++i)
+        freq[s[i] - 'a']++;
+
+    for (int i = half; i < n; ++i)
+        freq[s[i] - 'a']--;
+
+    int deletions = 0;
+    for (int f : freq)
+        if (f > 0)
+            deletions += f;
+
+    return deletions;
+}
+
+
 int main()
 {
     ofstream fout(getenv("OUTPUT_PATH"));
