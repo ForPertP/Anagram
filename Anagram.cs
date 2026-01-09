@@ -34,6 +34,14 @@ class Result {
         for (int i = half; i < n; i++) {
             freq[s.charAt(i) - 'a']--;
         }
+
+        int deletions = 0;
+        for (int f : freq) {
+            if (f > 0)
+                deletions += f;
+        }
+
+        return deletions;
     }
 }
 
