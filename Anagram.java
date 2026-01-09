@@ -18,6 +18,13 @@ class Result {
      * The function is expected to return an INTEGER.
      * The function accepts STRING s as parameter.
      */
+
+
+    public static int anagram(String s) {
+        int n = s.length();
+        if (n % 2 != 0)
+            return -1;
+    }    
 }
 
 
