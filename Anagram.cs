@@ -1,19 +1,16 @@
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
-using System.Text;
-using System;
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
-class Result
-{
+class Result {
 
     /*
      * Complete the 'anagram' function below.
@@ -22,49 +19,46 @@ class Result
      * The function accepts STRING s as parameter.
      */
 
-    public static int anagram(string s)
-    {
-        int n = s.Length;
+    public static int anagram(String s) {
+        int n = s.length();
         if (n % 2 != 0)
             return -1;
 
         int[] freq = new int[26];
         int half = n / 2;
 
-        for (int i = 0; i < half; i++)
-            freq[s[i] - 'a']++;
+        for (int i = 0; i < half; i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
 
-        for (int i = half; i < n; i++)
-            freq[s[i] - 'a']--;
-
-        int deletions = 0;
-        foreach (int f in freq)
-            if (f > 0)
-                deletions += f;
-
-        return deletions;
+        for (int i = half; i < n; i++) {
+            freq[s.charAt(i) - 'a']--;
+        }
     }
 }
 
 
-class Solution
-{
-    public static void Main(string[] args)
-    {
-        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
 
-        int q = Convert.ToInt32(Console.ReadLine().Trim());
+        int q = Integer.parseInt(bufferedReader.readLine().trim());
 
-        for (int qItr = 0; qItr < q; qItr++)
-        {
-            string s = Console.ReadLine();
+        IntStream.range(0, q).forEach(qItr -> {
+            try {
+                String s = bufferedReader.readLine();
 
-            int result = Result.anagram(s);
+                int result = Result.anagram(s);
 
-            textWriter.WriteLine(result);
-        }
+                bufferedWriter.write(String.valueOf(result));
+                bufferedWriter.newLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
 
-        textWriter.Flush();
-        textWriter.Close();
+        bufferedReader.close();
+        bufferedWriter.close();
     }
 }
