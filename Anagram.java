@@ -19,12 +19,30 @@ class Result {
      * The function accepts STRING s as parameter.
      */
 
-
     public static int anagram(String s) {
         int n = s.length();
         if (n % 2 != 0)
             return -1;
-    }    
+
+        int[] freq = new int[26];
+        int half = n / 2;
+
+        for (int i = 0; i < half; i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
+
+        for (int i = half; i < n; i++) {
+            freq[s.charAt(i) - 'a']--;
+        }
+
+        int deletions = 0;
+        for (int f : freq) {
+            if (f > 0)
+                deletions += f;
+        }
+
+        return deletions;
+    }
 }
 
 
